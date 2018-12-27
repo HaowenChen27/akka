@@ -26,25 +26,23 @@ public class CreationApplication {
     }
 
     public static void startRemoteCreationSystem() {
-        final ActorSystem system = ActorSystem.create("CreationSystem",
-                ConfigFactory.load("remotecreation"));
+        final ActorSystem system = ActorSystem.create("CreationSystem");
         final ActorRef actor = system.actorOf(Props.create(CreationActor.class),
                 "creationActor");
+        System.out.println(actor.path());
 
         System.out.println("Started CreationSystem");
-        final Random r = new Random();
+       /* final Random r = new Random();
         system.scheduler().schedule(Duration.create(1, SECONDS),
-                Duration.create(1, SECONDS), new Runnable() {
-                    @Override
-                    public void run() {
-                        if (r.nextInt(100) % 2 == 0) {
-                            actor.tell(new Op.Multiply(r.nextInt(100), r.nextInt(100)), null);
-                        } else {
-                            actor.tell(new Op.Divide(r.nextInt(10000), r.nextInt(99) + 1),
-                                    null);
-                        }
+                Duration.create(1, SECONDS), () -> {
+                    if (r.nextInt(100) % 2 == 0) {
+                        actor.tell(new Op.Multiply(r.nextInt(100), r.nextInt(100)), null);
+                    } else {
+                        actor.tell(new Op.Divide(r.nextInt(10000), r.nextInt(99) + 1),
+                                null);
                     }
-                }, system.dispatcher());
+                }, system.dispatcher());*/
+       actor.tell(new Op.Multiply(10,20),null);
     }
 
 }

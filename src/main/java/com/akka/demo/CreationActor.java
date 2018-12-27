@@ -9,6 +9,7 @@ public class CreationActor extends UntypedAbstractActor {
     public void onReceive(Object message) throws Throwable {
         if (message instanceof Op.MathOp){
             ActorRef calculator = getContext().actorOf(Props.create(CalculatorActor.class));
+            System.out.println(calculator.path());
             calculator.tell(message,getSelf());
         }else if(message instanceof Op.MultiplyResult){
             Op.MultiplyResult result = (Op.MultiplyResult) message;
